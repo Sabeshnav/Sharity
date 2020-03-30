@@ -32,6 +32,8 @@ ngo:
             application/json:
               schema:
                 $ref: "./schemas.yml#/schemas/Error"
+      security: []
+
     post:
       summary: Create a ngo
       operationId: app.api.NgoView.post
@@ -56,6 +58,7 @@ ngo:
             application/json:
               schema:
                 $ref: "./schemas.yml#/schemas/Error"
+      security: []
 
 ngo/{ngoId}:
     get:
@@ -85,6 +88,7 @@ ngo/{ngoId}:
             application/json:
               schema:
                 $ref: "./schemas.yml#/schemas/Error"
+      security: []
 
     put:
       summary: Update a ngo
@@ -265,9 +269,9 @@ ngo/{ngoId}/documents:
               schema:
                 $ref: "./schemas.yml#/schemas/Error"
 
-    put:
+    post:
       summary: Update ngo documents
-      operationId: app.api.NgoDocumentsView.put
+      operationId: app.api.NgoDocumentsView.post
       tags:
         - ngos
       parameters:
@@ -290,6 +294,39 @@ ngo/{ngoId}/documents:
             application/json:
               schema:
                 $ref: "./schemas.yml#/schemas/DocumentFileResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+
+ngo/{ngoId}/documents/{filename}:
+    delete:
+      summary: Delete a ngo document
+      operationId: app.api.NgoDocumentsView.delete
+      tags:
+        - ngos
+      parameters:
+        - name: ngoId
+          in: path
+          required: true
+          description: The id of the ngo to delete document
+          schema:
+            type: string
+        - name: filename
+          in: path
+          required: true
+          description: The filename of the document to delete
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User document record interpreted by backend
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/StaticDelete"
         default:
           description: unexpected error
           content:
@@ -333,9 +370,11 @@ ngo/{ngoId}/requirements/{requirementId}:
             application/json:
               schema:
                 $ref: "./schemas.yml#/schemas/Error"
+      security: []
+                
 
     put:
-      summary: Update ngo documents
+      summary: Update ngo requirement
       operationId: app.api.NgoRequirementsView.put
       tags:
         - ngos
@@ -433,6 +472,8 @@ ngo/{ngoId}/requirements:
             application/json:
               schema:
                 $ref: "./schemas.yml#/schemas/Error"
+      security: []
+
     post:
       summary: Create a requirement
       operationId: app.api.NgoRequirementsView.post
@@ -458,6 +499,134 @@ ngo/{ngoId}/requirements:
             application/json:
               schema:
                 $ref: "./schemas.yml#/schemas/requirement"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+
+# ==================
+# Transaction
+
+ngo/{ngoId}/transaction:
+    get:
+      summary: List all transaction
+      operationId: app.api.NgoTransactionView.getAll
+      tags:
+        - ngos
+      parameters:
+        - name: ngoId
+          in: path
+          required: true
+          description: The id of the user to update
+          schema:
+            type: string
+      responses:
+        '200':
+          description: An paged array of transaction
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                    $ref: "./schemas.yml#/schemas/Transaction"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+      security: []
+
+# ==================
+# Images
+
+ngo/{ngoId}/images:
+    get:
+      summary: Info for a specific ngo's images
+      operationId: app.api.NgoImageView.get
+      tags:
+        - ngos
+      parameters:
+        - name: ngoId
+          in: path
+          required: true
+          description: The id of the ngo to retrieve image
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected document response
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/ImageFileResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+
+    post:
+      summary: Update ngo images
+      operationId: app.api.NgoImageView.post
+      tags:
+        - ngos
+      parameters:
+        - name: ngoId
+          in: path
+          required: true
+          description: The id of the ngo to update image
+          schema:
+            type: string
+      requestBody:
+        description: ngo document data to update
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "./schemas.yml#/schemas/ImageFileRequest"
+      responses:
+        '200':
+          description: User document record interpreted by backend
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/ImageFileResponse"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+
+ngo/{ngoId}/images/{imageId}:
+    delete:
+      summary: Delete a specific ngo's images
+      operationId: app.api.NgoImageView.delete
+      tags:
+        - ngos
+      parameters:
+        - name: ngoId
+          in: path
+          required: true
+          description: The id of the ngo to delete a image
+          schema:
+            type: string
+        - name: imageId
+          in: path
+          required: true
+          description: The id of the image to be deleted
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected document response
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/StaticDelete"
         default:
           description: unexpected error
           content:

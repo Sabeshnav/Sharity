@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-from flask import g
 
 class Database(object):
         __instance = None
@@ -16,14 +15,18 @@ class Database(object):
         def connect(self):
                 #use only once in the main thread
                 conn = MongoClient(self.app.config['DATABASE_HOST'], maxPoolSize=None, waitQueueTimeoutMS=1000)
+                self.rawclient = conn
                 self.conn = conn[self.app.config['DATABASE']]
                 return conn
 
         @staticmethod 
         def getInstance():
                 if Database.__instance == None:
-                        Database()
+                        raise Exception("This class not initialized!")
                 return Database.__instance
 
         def getConnection(self):
                 return self.conn
+
+        def getTansaction(self):
+                return self.rawclient.start_session()

@@ -1,0 +1,115 @@
+user/{user_id}/code:
+  get:
+      summary: Lists every code of an user
+      operationId: app.api.CodeView.getEveryCode
+      tags:
+        - code
+      responses:
+        '200':
+          description: An array of an user's code
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                    $ref: "./schemas.yml#/schemas/Code"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+  post:
+      summary: Add the code
+      operationId: app.api.CodeView.submitCode
+      tags:
+        - code
+      requestBody:
+        description: Code and its details to add to the server
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yml#/schemas/Code"
+      responses:
+        '200':
+          description: Code details with the unique code_id
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/code"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+      security: []
+user/{user_id}/code/{code_id}:
+  get:
+    summary: Returns the code and its details
+      operationId: app.api.CodeView.getCode
+      tags:
+        - code
+      responses:
+        '200':
+          description: A json object with code and its details
+          content:
+            application/json:
+              schema:
+                type: "string"
+                items:
+                  $ref: "./schemas.yml#/schemas/editCode"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+  put:
+    summary: Updates the code an User wants to
+      operationId: app.api.CodeView.updateCode
+      tags:
+        - code
+      responses:
+        '200':
+          description: A json object with code and its details
+          content:
+            application/json:
+              schema:
+                type: "string"
+                items:
+                  $ref: "./schemas.yml#/schemas/editCode"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "./schemas.yml#/schemas/Error"
+  delete:
+    summary: Delete a code
+    operationId: app.api.CodeView.deleteCode
+    tags:
+      - code
+    parameters:
+      - name: userId
+        required: true
+        schema:
+          type: string
+      - name: codeId
+        required: true
+        description: The code ID of the code the user wants to delete
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Null response
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yml#/schemas/Delete"
+      default:
+        description: unexpected error
+        content:
+          application/json:
+            schema:
+              $ref: "./schemas.yml#/schemas/Error"

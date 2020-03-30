@@ -4,12 +4,17 @@ info:
   title: Sharity Docs
 servers:
   - url: http://localhost:5000
+security:
+  - jwt: ['secret']
 paths:
-
   /user:
     $ref: "./userapi.yml#user"
   '/user/{userId}':
     $ref: "./userapi.yml#user~1{userId}"
+  '/user/{userId}/transaction':
+    $ref: "./userapi.yml#user~1{userId}~1transaction"
+  '/user/{userId}/admin':
+    $ref: "./userapi.yml#user~1{userId}~1admin"
 
   /ngo:
     $ref: "./ngoapi.yml#ngo"
@@ -19,10 +24,18 @@ paths:
     $ref: "./ngoapi.yml#ngo~1{ngoId}~1bankdetails"
   '/ngo/{ngoId}/documents':
     $ref: "./ngoapi.yml#ngo~1{ngoId}~1documents"
+  '/ngo/{ngoId}/documents/{filename}':
+    $ref: "./ngoapi.yml#ngo~1{ngoId}~1documents~1{filename}"
   '/ngo/{ngoId}/requirements':
     $ref: "./ngoapi.yml#ngo~1{ngoId}~1requirements"
   '/ngo/{ngoId}/requirements/{requirementId}':
     $ref: "./ngoapi.yml#ngo~1{ngoId}~1requirements~1{requirementId}"
+  '/ngo/{ngoId}/transaction':
+    $ref: "./ngoapi.yml#ngo~1{ngoId}~1transaction"
+  '/ngo/{ngoId}/images':
+    $ref: "./ngoapi.yml#ngo~1{ngoId}~1images"
+  '/ngo/{ngoId}/images/{imageId}':
+    $ref: "./ngoapi.yml#ngo~1{ngoId}~1images~1{imageId}"
 
   /city:
     $ref: "./cityapi.yml#city"
@@ -38,9 +51,17 @@ paths:
     $ref: "./transactionapi.yml#transaction"
   '/transaction/{transactionId}':
     $ref: "./transactionapi.yml#transaction~1{transactionId}"
+
+  '/static/{type}/{id}':
+    $ref: "./staticapi.yml#static~1{type}~1{id}"
+
+  /auth/login:
+    $ref: "./authapi.yml#login"
     
 components:
   $ref: "./schemas.yml"
+
+
 
 
 # Subresource considerations for a nested propery object of an entity:
