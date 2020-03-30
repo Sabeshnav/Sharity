@@ -6,7 +6,6 @@ import json
 class UserView(SuperView): 
     """ Create User service
     """
-
     method_decorators = []
     _decorators = []
 
