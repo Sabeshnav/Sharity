@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## Developer Guide
 
 - Database used: mongoDB
@@ -35,7 +34,7 @@
 - hash password
 - filtes on ngo,user,transaction admin filter, city...
 - list auth file
-=======
+
 ## Developer Guide
 
 - Database used: mongoDB
@@ -72,5 +71,4 @@
 - hash password
 - filtes on ngo,user,transaction admin filter, city...
 - list auth file
->>>>>>> 3c68f47ee31e0aeb10e0bb8d4ba54b1088a41d8f
 - add me endpoint
