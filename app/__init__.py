@@ -1,4 +1,3 @@
-
 import os, sys
 import connexion
 from app.ConnectionBusinessException import BussinessException
