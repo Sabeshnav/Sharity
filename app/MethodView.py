@@ -1053,4 +1053,3 @@ class SuperView(views.MethodView):
         response.direct_passthrough = False
         return response, 200
         
-        
