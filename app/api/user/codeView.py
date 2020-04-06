@@ -10,22 +10,22 @@ class CodeView(SuperView):
     method_decorators = []
     _decorators = []
 
-    resource = 'code'
+    resource = 'user'
+    subresource = 'code'
 
-    def submitCode(self,user_id):
+    def submit(self,user_id):
         body = request.json
-        return self.insert(body,objectId=user_id)
+        return self.insert_subdocument_array(obj_id=user_id, data=body, resource=self.resource, subresource=self.subresource)
 
-    def getCode(self,user_id,code_id):
-        return self.retrieve(user_id=user_id,obj_id=code_id)
+    def get(self,user_id,code_id):
+        return self.retrieve_subdocument_array(obj_id=user_id,sub_obj_id=code_id,resource=self.resource,subresource=self.subresource)
 
-    def updateCode(self,user_id,code_id):
+    def Update(self,user_id,code_id):
         body = request.json
-        return self.update(data=body,user_id=user_id,obj_id=code_id)
+        return self.update_subdocument_array(obj_id=user_id, sub_obj_id=code_id, resource=self.resource, subresource=self.subresource, data=body)
 
-    def deleteCode(self,user_id,code_id):
-        return self.remove(user_id=user_id,obj_id=code_id)
+    def delete(self,user_id, code_id):
+        return self.remove_subdocument_array(obj_id=user_id, sub_obj_id=code_id, resource=self.resource, subresource=self.subresource)
 
-    def getEveryCode(self,user_id):
-        search = {"user_id":user_id}
-        return self.retrieveAll(search=search)
+    def getAll(self,user_id):
+        return self.retrieveAll_subdocument_array(obj_id=user_id, resource=self.resource, subresource=self.subresource)
